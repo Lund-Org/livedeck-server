@@ -1,0 +1,61 @@
+{
+  "name": "livedeck-server",
+  "version": "0.0.1",
+  "description": "The server which manage the communication between the apps",
+  "main": "./src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "npm run test",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lund-Org/livedeck-server.git"
+  },
+  "keywords": [
+    "livedeck",
+    "server"
+  ],
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "author": "Lund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lund-Org/livedeck-server/issues"
+  },
+  "homepage": "https://github.com/Lund-Org/livedeck-server#readme",
+  "dependencies": {
+    "@lund-org/cherry": "^0.1.1",
+    "@lund-org/cherry-pug-connector": "0.0.1",
+    "@lund-org/cherry-typeorm-connector": "0.0.3",
+    "bcrypt": "^3.0.5",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^1.6.5",
+    "socket.io": "^2.2.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.1.2",
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^13.2.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src"
+  ]
+}
