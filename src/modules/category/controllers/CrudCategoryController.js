@@ -41,8 +41,10 @@ class CrudCategoryController extends AbstractCategoryController {
       category.setUser(req.user)
       const savedCategory = await category.save()
       res.json(savedCategory, { statusCode: 201 })
+      return savedCategory
     } catch (e) {
       res.json(e, { statusCode: 400 })
+      return null
     }
   }
 
@@ -58,8 +60,10 @@ class CrudCategoryController extends AbstractCategoryController {
       category.set(req.params)
       await category.save()
       res.json(category)
+      return category
     } else {
       res.json(this._notFoundPayload(), { statusCode: 404 })
+      return null
     }
   }
 
@@ -76,6 +80,7 @@ class CrudCategoryController extends AbstractCategoryController {
     }
 
     res.json({ removed: category })
+    return category
   }
 }
 

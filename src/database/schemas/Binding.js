@@ -25,6 +25,9 @@ module.exports = new EntitySchema({
     weight: {
       type: 'integer'
     },
+    configuration: {
+      type: 'json'
+    },
     created_at: {
       type: 'datetime'
     },

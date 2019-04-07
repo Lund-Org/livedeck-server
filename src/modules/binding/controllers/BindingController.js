@@ -40,8 +40,10 @@ class BindingController {
       binding.setUser(req.user)
       const savedBinding = await binding.save()
       res.json(savedBinding, { statusCode: 201 })
+      return savedBinding
     } catch (e) {
       res.json(e, { statusCode: 400 })
+      return null
     }
   }
 
@@ -57,8 +59,10 @@ class BindingController {
       binding.set(req.params)
       await binding.save()
       res.json(binding)
+      return binding
     } else {
       res.json(this._notFoundPayload(), { statusCode: 404 })
+      return null
     }
   }
 
@@ -75,6 +79,7 @@ class BindingController {
     }
 
     res.json({ removed: binding })
+    return binding
   }
 
   /**

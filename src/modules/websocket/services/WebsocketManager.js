@@ -1,4 +1,6 @@
 const socketIo = require('socket.io')
+const FrontProcessor = require('./FrontProcessor')
+const SoftwareProcessor = require('./SoftwareProcessor')
 
 class WebsocketManager {
   constructor () {
@@ -6,6 +8,9 @@ class WebsocketManager {
     this.connectionPool = []
     this.frontSocketPool = {}
     this.softwareSocketPool = {}
+
+    this.frontProcessor = new FrontProcessor(this)
+    this.softwareProcessor = new SoftwareProcessor(this)
   }
 
   /**
@@ -58,8 +63,10 @@ class WebsocketManager {
 
     if (data.device === 'front') {
       this._sortIOPool(client, data, this.frontSocketPool, socketIndex)
+      this.frontProcessor.bindEvents(client)
     } else if (data.device === 'software') {
       this._sortIOPool(client, data, this.softwareSocketPool, socketIndex)
+      this.softwareProcessor.bindEvents(client)
     }
   }
 

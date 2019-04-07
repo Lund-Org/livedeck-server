@@ -16,10 +16,12 @@ module.exports = {
           method: ['GET']
         },
         {
+          name: 'create-category',
           type: 'ROUTE',
           callback: (req, res) => CrudCategoryController.create(req, res),
           path: '/',
-          method: ['POST']
+          method: ['POST'],
+          middlewares: ['category-create-payload-validator']
         },
         {
           type: 'ROUTE',
@@ -31,15 +33,18 @@ module.exports = {
           }
         },
         {
+          name: 'update-category',
           type: 'ROUTE',
           callback: (req, res) => CrudCategoryController.update(req, res),
           path: '/:id',
           method: ['PATCH'],
           rules: {
             id: /\d+/
-          }
+          },
+          middlewares: ['category-update-payload-validator']
         },
         {
+          name: 'delete-category',
           type: 'ROUTE',
           callback: (req, res) => CrudCategoryController.delete(req, res),
           path: '/:id',
@@ -49,6 +54,7 @@ module.exports = {
           }
         },
         {
+          name: 'add-binding-to-category',
           type: 'ROUTE',
           callback: (req, res) => RestCategoryController.addBinding(req, res),
           path: '/:id/bindings/:bindingId',
@@ -59,6 +65,7 @@ module.exports = {
           }
         },
         {
+          name: 'remove-binding-from-category',
           type: 'ROUTE',
           callback: (req, res) => RestCategoryController.removeBinding(req, res),
           path: '/:id/bindings/:bindingId',

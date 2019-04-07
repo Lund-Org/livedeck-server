@@ -16,8 +16,10 @@ class RestCategoryController extends AbstractCategoryController {
       category.addBinding(binding)
       await category.save()
       res.json(category)
+      return category
     } else {
       res.json(this._notFoundPayload(), { statusCode: 404 })
+      return null
     }
   }
 
@@ -34,8 +36,10 @@ class RestCategoryController extends AbstractCategoryController {
       category.removeBinding(binding)
       await category.save()
       res.json(category)
+      return category
     } else {
       res.json(this._notFoundPayload(), { statusCode: 404 })
+      return null
     }
   }
 }
