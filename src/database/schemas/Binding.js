@@ -26,7 +26,7 @@ module.exports = new EntitySchema({
       type: 'integer'
     },
     configuration: {
-      type: 'json'
+      type: 'text'
     },
     created_at: {
       type: 'datetime'
