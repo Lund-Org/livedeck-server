@@ -1,6 +1,7 @@
 const socketIo = require('socket.io')
 const FrontProcessor = require('./FrontProcessor')
 const SoftwareProcessor = require('./SoftwareProcessor')
+const UserRepository = require('../../../database/repositories/UserRepository')
 
 class WebsocketManager {
   constructor () {
@@ -17,15 +18,20 @@ class WebsocketManager {
    * Initialize the websocket manager
    * It's called on the hook before the start of the server
    */
-  init () {
-    this.io = socketIo(process.env.APP_WEBSOCKET_PORT, {
-      path: '/',
-      serveClient: false,
-      // below are engine.IO options
-      pingInterval: 10000,
-      pingTimeout: 5000,
-      cookie: false
-    }).on('connection', this._manageConnection)
+  async init (httpServer = null) {
+    if (httpServer) {
+      return new Promise((resolve, reject) => {
+        try {
+          this.io = socketIo(httpServer)
+          this.io.on('connection', this._manageConnection.bind(this))
+          resolve(this.io)
+        } catch (e) {
+          reject(e)
+        }
+      })
+    } else {
+      console.warn('You didn\'t pass a server to the websocket manager')
+    }
   }
 
   /**
@@ -33,7 +39,9 @@ class WebsocketManager {
    * It's called on the hook after the close of the server
    */
   close () {
-    this.io.disconnect()
+    if (this.io) {
+      this.io.close()
+    }
   }
 
   /**
@@ -44,7 +52,17 @@ class WebsocketManager {
     this.connectionPool.push(client)
 
     client.on('authentify', (data) => {
-      this._manageAuthentication(client, data)
+      UserRepository.getOneByAsync('key', data.token).then((user) => {
+        if (user) {
+          this._manageAuthentication(client, data)
+          client.emit('authentication-ok')
+        } else {
+          client.emit('authentication-ko')
+        }
+      }).catch((e) => {
+        console.log(e)
+        client.emit('authentication-ko')
+      })
     })
     client.on('disconnect', () => {
       this._manageClientDisconnection(client)
@@ -79,10 +97,16 @@ class WebsocketManager {
 
     Object.keys(this.frontSocketPool).forEach((index) => {
       this._removeConnection(this.frontSocketPool[index], client)
+      if (this.frontSocketPool[index].length === 0) {
+        delete this.frontSocketPool[index]
+      }
     })
 
     Object.keys(this.softwareSocketPool).forEach((index) => {
       this._removeConnection(this.softwareSocketPool[index], client)
+      if (this.softwareSocketPool[index].length === 0) {
+        delete this.softwareSocketPool[index]
+      }
     })
   }
 

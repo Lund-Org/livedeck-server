@@ -13,16 +13,18 @@ class AuthController {
   async login (req, res) {
     try {
       const obj = {}
-      const user = await UserRepository.getOneByAsync('username', req.params.username)
+      const user = await UserRepository.getOneByAsync('username', req.params.username, true)
 
       if (user) {
         return new Promise((resolve, reject) => {
           bcrypt.compare(req.params.password, user.password, (err, bcryptRes) => {
             if (err || !bcryptRes) {
-              res.json(err, { statusCode: 401 })
-              reject(err || bcryptRes)
+              res.json({
+                error: typeof err !== 'undefined' ? err.message : 'Wrong password'
+              }, { statusCode: 401 })
+              resolve(err || bcryptRes)
             } else {
-              obj.token = jwt.sign({ authorization: user.key }, process.env.APP_JWT_SIGN_KEY)
+              obj.token = jwt.sign({ authorization: user.key }, process.env.APP_JWT_SIGN_KEY, { noTimestamp: true })
               res.json(obj)
               resolve(obj)
             }
@@ -48,7 +50,7 @@ class AuthController {
       const savedUser = await user.save()
       res.json(savedUser, { statusCode: 201 })
     } catch (e) {
-      res.json(e, { statusCode: 400 })
+      res.json({ error: e.message }, { statusCode: 400 })
     }
   }
 
@@ -73,6 +75,9 @@ class AuthController {
           payload = { error: 'not-found' }
           statusCode = 404
         }
+      } else {
+        payload = { error: 'not-found' }
+        statusCode = 404
       }
     } catch (error) {
       payload = { error }

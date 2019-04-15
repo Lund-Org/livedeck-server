@@ -1,11 +1,13 @@
 {
   "check-coverage": true,
   "per-file": true,
+  "lines": 80,
   "include": [
     "src/**/*.js"
   ],
   "exclude": [
-    "test/**/*.spec.js"
+    "test/**/*.spec.js",
+    "src/index.js"
   ],
   "reporter": [
     "lcov",

@@ -27,7 +27,7 @@ class SoftwareProcessor extends AbstractWSProcessor {
   emitAction (user, softwarePoolWS, binding) {
     if (typeof softwarePoolWS[user.key] !== 'undefined') {
       softwarePoolWS[user.key].forEach((ws) => {
-        ws.send('binding-triggered', {
+        ws.emit('binding-triggered', {
           bindingId: binding.id
         })
       })

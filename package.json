@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "npm run test",
+    "test": "mocha --compilers js:@babel/register --require ignore-styles -r jsdom-global/register",
     "coverage": "nyc npm run test"
   },
   "repository": {
@@ -50,7 +50,8 @@
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
-    "nyc": "^13.3.0"
+    "nyc": "^13.3.0",
+    "socket.io-client": "^2.2.0"
   },
   "publishConfig": {
     "access": "public"

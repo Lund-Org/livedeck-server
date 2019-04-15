@@ -6,6 +6,7 @@ services:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE test_database;'
+  - mysql -e < ./test/configuration/etc/fixtures/test_setup.sql
 branches:
   only:
     - master
@@ -15,19 +16,5 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script: npm run coverage
-stages:
-  - name: npm release
-    if: tag =~ /^\d+\.\d+\.\d+$/
 after_script:
   - ./cc-test-reporter after-build format-coverage -t lcov --exit-code $TRAVIS_TEST_RESULT
-jobs:
-  include:
-    - stage: npm release
-      node_js: "11"
-      script: echo "Deploying to npm ..."
-      deploy:
-        provider: npm
-        email: $NPM_EMAIL
-        api_key: $NPM_API_KEY
-        on:
-          tags: true

@@ -5,7 +5,7 @@ const requiredKeys = {
   'icon': 'string',
   'weight': 'number',
   'type': 'string',
-  'configuration': 'string'
+  'configuration': 'object'
 }
 
 /**
@@ -18,14 +18,6 @@ module.exports = {
   name: 'binding-update-payload-validator',
   callback: (next, req, res) => {
     const badFormatKeys = MiddlewareHelper.badFormatKeys(requiredKeys, req.params)
-
-    try {
-      if (!badFormatKeys.includes('configuration')) {
-        JSON.parse(req.params.configuration)
-      }
-    } catch (e) {
-      badFormatKeys.push('configuration')
-    }
 
     if (badFormatKeys.length === 0) {
       next.resolve(req, res)

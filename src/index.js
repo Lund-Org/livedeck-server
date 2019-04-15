@@ -21,3 +21,5 @@ const options = {
 const cherry = new Cherry()
 cherry.configure(options)
 cherry.start(options)
+
+module.exports = cherry

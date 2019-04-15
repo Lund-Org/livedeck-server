@@ -12,7 +12,7 @@ class User extends Entity {
     super({ private: ['password'] })
     // default
     this.username = ''
-    this.password = ''
+    this.password = null
     this.key = uuid()
 
     this.created_at = new Date().toISOString().slice(0, 19).replace('T', ' ')

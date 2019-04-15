@@ -77,10 +77,11 @@ class CrudCategoryController extends AbstractCategoryController {
 
     if (category) {
       await category.delete()
+      res.json({ removed: category })
+      return category
+    } else {
+      res.json(this._notFoundPayload(), { statusCode: 404 })
     }
-
-    res.json({ removed: category })
-    return category
   }
 }
 

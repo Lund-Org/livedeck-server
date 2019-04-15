@@ -1,4 +1,4 @@
-const { getRepository } = require('typeorm')
+const { getConnection, getRepository } = require('typeorm')
 const Entity = require('./Entity')
 
 /**
@@ -13,7 +13,7 @@ class Binding extends Entity {
     this.icon = 'default.png'
     this.weight = 0
     this.type = ''
-    this.configuration = '{}'
+    this.configuration = {}
 
     if (typeof data !== 'undefined') {
       this.set(data)
@@ -29,24 +29,6 @@ class Binding extends Entity {
   }
 
   /**
-   * Add the binding in a category
-   * @param {Category} category The category where the binding is added
-   */
-  addCategory (category) {
-    if (this.categories) {
-      const isAlreadyRegistered = this.categories.some((_category) => {
-        return (_category.id === category.id)
-      })
-
-      if (!isAlreadyRegistered) {
-        this.categories.push(category)
-      }
-    } else {
-      this.categories = [category]
-    }
-  }
-
-  /**
    * Save the category in the database
    * @return {Object} The saved entity
    */
@@ -59,7 +41,12 @@ class Binding extends Entity {
    * @return {Object} The saved entity
    */
   async delete () {
-    return getRepository(Binding).delete(this)
+    return getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(Binding)
+      .where('id = :id', { id: this.id })
+      .execute()
   }
 }
 

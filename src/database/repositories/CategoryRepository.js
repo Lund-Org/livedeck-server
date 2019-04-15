@@ -8,12 +8,12 @@ class CategoryRepository {
    * @param {boolean} withBindingRelation If we want to load the bindings with the category
    * @return {Promise<Array>} The list of categories
    */
-  static async getCategoriesByUserIdAsync (userId, withBindingRelation = false) {
+  static async getCategoriesByUserIdAsync (userId /* , withBindingRelation = false */) {
     const request = getRepository(Category).createQueryBuilder('categories')
 
-    if (withBindingRelation) {
-      request.leftJoinAndSelect('categories.bindings', 'bindings')
-    }
+    // if (withBindingRelation) {
+    //   request.leftJoinAndSelect('categories.bindings', 'bindings')
+    // }
 
     return request.where('categories.userId = :userId', { userId }).getMany()
   }

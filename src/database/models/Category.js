@@ -1,4 +1,4 @@
-const { getRepository } = require('typeorm')
+const { getConnection, getRepository } = require('typeorm')
 const Entity = require('./Entity')
 
 /**
@@ -76,7 +76,12 @@ class Category extends Entity {
    * @return {Object} The saved entity
    */
   async delete () {
-    return getRepository(Category).delete(this)
+    return getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(Category)
+      .where('id = :id', { id: this.id })
+      .execute()
   }
 }
 

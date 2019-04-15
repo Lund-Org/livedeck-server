@@ -16,7 +16,9 @@ class FrontProcessor extends AbstractWSProcessor {
    * @param {WebsocketManager} websocketManager The websocket manager
    */
   bindEvents (io) {
-    io.on('trigger-binding', this.onBindingTriggered)
+    io.on('trigger-binding', (data) => {
+      this.onBindingTriggered.bind(this)(io, data)
+    })
   }
 
   /**
@@ -30,12 +32,17 @@ class FrontProcessor extends AbstractWSProcessor {
 
     if (indexFromPool) {
       UserRepository.getOneByAsync('key', indexFromPool).then((user) => {
-        this.websocketManager.softwareProcessor.triggerBinding(
+        this.websocketManager.softwareProcessor.emitAction(
           user,
           this.websocketManager.softwareSocketPool,
           data
         )
+        client.emit('trigger-binding-ok')
+      }).catch(() => {
+        client.emit('trigger-binding-ko')
       })
+    } else {
+      client.emit('trigger-binding-ko')
     }
   }
 
@@ -62,8 +69,8 @@ class FrontProcessor extends AbstractWSProcessor {
    * @param {User} user The authenticated user
    * @param {Category} binding The binding updated
    */
-  emitDeleteCategory (user, binding) {
-    this._findAndEmitAction(user, 'delete-binding', { binding })
+  emitDeleteCategory (user, category) {
+    this._findAndEmitAction(user, 'delete-category', { category })
   }
 
   /**

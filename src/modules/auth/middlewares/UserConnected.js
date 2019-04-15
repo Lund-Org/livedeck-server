@@ -14,7 +14,7 @@ module.exports = {
         req.user = user
         next.resolve(req, res)
       } else {
-        res.json({ error: 'User not found' }, { statusCode: 404 })
+        res.json({ error: 'Permission denied' }, { statusCode: 401 })
       }
     }).catch((err) => {
       res.json({ error: err }, { statusCode: 500 })
