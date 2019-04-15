@@ -6,7 +6,6 @@ services:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE test_database;'
-  - mysql -e < ./test/configuration/etc/fixtures/test_setup.sql
 branches:
   only:
     - master

@@ -1,9 +1,7 @@
 # 🌉 Livedeck Server
 
-[![Build Status](https://travis-ci.com/Lund-Org/livedeck.svg?branch=master)](https://travis-ci.com/Lund-Org/livedeck)
-[![Maintainability](https://api.codeclimate.com/v1/badges/9a31be9be174ebcbd59f/maintainability)](https://codeclimate.com/github/Lund-Org/livedeck/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/9a31be9be174ebcbd59f/test_coverage)](https://codeclimate.com/github/Lund-Org/livedeck/test_coverage)
-
-NEED TO CHANGE THE BADGES HASH FROM CODECLIMATE
+[![Build Status](https://travis-ci.com/Lund-Org/livedeck-server.svg?branch=master)](https://travis-ci.com/Lund-Org/livedeck-server)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3aca2987a1354a0a3c3d/test_coverage)](https://codeclimate.com/github/Lund-Org/livedeck-server/test_coverage)
 
 Livedeck server is the bridge between the smartphone webapp and the software.
 It manages the data and the communication.
