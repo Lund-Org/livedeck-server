@@ -13,7 +13,7 @@ class Binding extends Entity {
     this.icon = 'default.png'
     this.weight = 0
     this.type = ''
-    this.configuration = {}
+    this.configuration = '{}'
 
     if (typeof data !== 'undefined') {
       this.set(data)

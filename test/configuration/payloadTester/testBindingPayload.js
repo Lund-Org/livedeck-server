@@ -16,6 +16,6 @@ module.exports = (payload, name) => {
     expect(Array.isArray(payload.categories)).to.be.true
   }
   if (typeof payload.configuration !== 'undefined') {
-    expect(typeof payload.configuration).to.be.equal('object')
+    expect(typeof payload.configuration).to.be.equal('string')
   }
 }

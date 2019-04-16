@@ -1,3 +1,4 @@
+/* eslint-disable valid-typeof */
 module.exports = {
   /**
    * Check the missing keys of a payload
@@ -24,10 +25,11 @@ module.exports = {
    */
   badFormatKeys (pattern, data) {
     const badFormatKeys = []
-
     for (const key in pattern) {
-      // eslint-disable-next-line valid-typeof
-      if (typeof data[key] !== 'undefined' && typeof data[key] !== pattern[key]) {
+      if (typeof data[key] !== 'undefined' &&
+          typeof data[key] !== pattern[key] &&
+        (!Array.isArray(pattern[key]) || (Array.isArray(pattern[key]) && !pattern[key].includes(typeof data[key])))
+      ) {
         badFormatKeys.push(key)
       }
     }

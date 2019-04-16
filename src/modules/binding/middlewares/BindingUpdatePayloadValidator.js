@@ -5,7 +5,7 @@ const requiredKeys = {
   'icon': 'string',
   'weight': 'number',
   'type': 'string',
-  'configuration': 'object'
+  'configuration': ['string', 'object']
 }
 
 /**
@@ -20,6 +20,9 @@ module.exports = {
     const badFormatKeys = MiddlewareHelper.badFormatKeys(requiredKeys, req.params)
 
     if (badFormatKeys.length === 0) {
+      if (typeof req.params.configuration === 'object') {
+        req.params.configuration = JSON.stringify(req.params.configuration)
+      }
       next.resolve(req, res)
     } else {
       res.json({
