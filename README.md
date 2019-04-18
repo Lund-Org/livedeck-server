@@ -39,7 +39,7 @@ node ./src/index.js
 #### :inbox_tray: Websocket event received by the server
 
 |Event name|Data|Emit by|Need Authentication|Description|
-| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
 |authentify|`{ token: <string>, device: <front or software> }`|WebApp|No|Allows an user to authentify its socket and to get access to the rest of the websocket calls|
 |trigger-binding|`{ id: <number> }`|WebApp|Yes|Tell to the server that a binding has been triggered to send it to the software. ID is the id of the binding triggered.|
 
@@ -48,7 +48,7 @@ node ./src/index.js
 #### :outbox_tray: Websocket event sent by the server
 
 |Event name|Data|Target|Need Authentication|Description|
-| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
 |create-category|`{ category: <Category> }`|WebApp|Yes|Tell to the webapp that a new category has been created|
 |update-category|`{ category: <Category> }`|WebApp|Yes|Tell to the webapp that a category has been updated|
 |delete-category|`{ category: <Category> }`|WebApp|Yes|Tell to the webapp that a category has been deleted|
