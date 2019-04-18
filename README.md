@@ -40,7 +40,7 @@ node ./src/index.js
 
 |Event name|Data|Emit by|Need Authentication|Description|
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-|authentify|`{ token: <string>, device: <front|software> }`|WebApp|No|Allows an user to authentify its socket and to get access to the rest of the websocket calls|
+|authentify|`{ token: <string>, device: <front or software> }`|WebApp|No|Allows an user to authentify its socket and to get access to the rest of the websocket calls|
 |trigger-binding|`{ id: <number> }`|WebApp|Yes|Tell to the server that a binding has been triggered to send it to the software. ID is the id of the binding triggered.|
 
 ---
