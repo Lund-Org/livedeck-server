@@ -92,8 +92,7 @@ Response body:
       "username": <string>,
       "key": <string>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>
+      "updated_at": <Datetime string>
     }
 
 ##### POST /login
@@ -110,7 +109,12 @@ Request body :
 Response body:
 
     {
+      "id": <number>,
+      "username": <string>,
+      "key": <string>,
       "token": <string>
+      "created_at": <Datetime string>,
+      "updated_at": <Datetime string>,
     }
 
 ##### POST /valid-token
@@ -131,8 +135,7 @@ Response body:
         "username": <string>,
         "key": <string>,
         "created_at": <Datetime string>,
-        "updated_at": <Datetime string>,
-        "deleted_at": <Datetime string | null>
+        "updated_at": <Datetime string>
       }
     }
 
@@ -164,8 +167,7 @@ Response body:
         "color": <string>,
         "weight": <number>,
         "created_at": <Datetime string>,
-        "updated_at": <Datetime string>,
-        "deleted_at": <Datetime string | null>
+        "updated_at": <Datetime string>
       },
       ...
     ]
@@ -182,8 +184,7 @@ Response body:
       "color": <string>,
       "weight": <number>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>,
+      "updated_at": <Datetime string>
       "bindings": [
         <Binding>,
         ...
@@ -210,8 +211,7 @@ Response body:
       "color": <string>,
       "weight": <number>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>,
+      "updated_at": <Datetime string>
       "bindings": [
         <Binding>,
         ...
@@ -238,8 +238,7 @@ Response body:
       "color": <string>,
       "weight": <number>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>,
+      "updated_at": <Datetime string>
       "bindings": [
         <Binding>,
         ...
@@ -259,8 +258,7 @@ Response body:
         "color": <string>,
         "weight": <number>,
         "created_at": <Datetime string>,
-        "updated_at": <Datetime string>,
-        "deleted_at": <Datetime string | null>
+        "updated_at": <Datetime string>
       }
     }
 
@@ -276,8 +274,7 @@ Response body:
       "color": <string>,
       "weight": <number>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>,
+      "updated_at": <Datetime string>
       "bindings": [
         <Binding>,
         ...
@@ -296,8 +293,7 @@ Response body:
       "color": <string>,
       "weight": <number>,
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>,
+      "updated_at": <Datetime string>
       "bindings": [
         <Binding>,
         ...
@@ -332,8 +328,7 @@ Response body:
         "type": <string>,
         "configuration": <Object>,
         "created_at": <Datetime string>,
-        "updated_at": <Datetime string>,
-        "deleted_at": <Datetime string | null>
+        "updated_at": <Datetime string>
       },
       ...
     ]
@@ -356,8 +351,7 @@ Response body:
         ...
       ],
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>
+      "updated_at": <Datetime string>
     }
 
 ##### POST /bindings/
@@ -384,8 +378,7 @@ Response body:
       "configuration": <Object>,
       "categories": [],
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>
+      "updated_at": <Datetime string>
     }
 
 ##### PATCH /bindings/:id/
@@ -416,8 +409,7 @@ Response body:
         ...
       ],
       "created_at": <Datetime string>,
-      "updated_at": <Datetime string>,
-      "deleted_at": <Datetime string | null>
+      "updated_at": <Datetime string>
     }
 
 ##### DELETE /bindings/:id/
@@ -436,8 +428,7 @@ Response body:
         "configuration": <Object>,
         "categories": [],
         "created_at": <Datetime string>,
-        "updated_at": <Datetime string>,
-        "deleted_at": <Datetime string | null>
+        "updated_at": <Datetime string>
       }
     }
 

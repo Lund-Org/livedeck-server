@@ -55,9 +55,13 @@ class BindingController {
   async update (req, res) {
     const binding = await BindingRepository.getBindingByIdAndUserIdAsync(req.routeParameters.id, req.user.id)
 
-    if (binding) {
+    if (typeof binding !== 'undefined' && binding) {
+      const oldBindingWeight = binding.weight
+      const newBindingWeight = typeof req.params.weight !== 'undefined' ? req.params.weight : oldBindingWeight
+
       binding.set(req.params)
       await binding.save()
+      await BindingRepository.updateOrder(binding.id, req.user.id, oldBindingWeight, newBindingWeight)
       res.json(binding)
       return binding
     } else {

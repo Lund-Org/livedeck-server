@@ -29,6 +29,21 @@ module.exports = (request, data) => {
     }, { Authorization: data.key }, { name: 'MyCategoryTest' })
   })
 
+  it('Tests the category order update API', async () => {
+    await request('/categories/' + data.categoryId, 'PATCH', (APIResponse, statusCode) => {
+      const apiResponseParsed = JSON.parse(APIResponse)
+
+      expect(statusCode).to.be.equal(200)
+      testCategoryPayload(apiResponseParsed, 'MyCategoryTest')
+    }, { Authorization: data.key }, { weight: 32 })
+    await request('/categories/' + data.categoryId, 'PATCH', (APIResponse, statusCode) => {
+      const apiResponseParsed = JSON.parse(APIResponse)
+
+      expect(statusCode).to.be.equal(200)
+      testCategoryPayload(apiResponseParsed, 'MyCategoryTest')
+    }, { Authorization: data.key }, { weight: 0 })
+  })
+
   it('Tests the category update without payload API', async () => {
     // Success category update
     await request('/categories/' + data.categoryId, 'PATCH', (APIResponse, statusCode) => {

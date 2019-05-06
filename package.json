@@ -27,9 +27,9 @@
   },
   "homepage": "https://github.com/Lund-Org/livedeck-server#readme",
   "dependencies": {
-    "@lund-org/cherry": "^0.1.1",
-    "@lund-org/cherry-pug-connector": "0.0.1",
-    "@lund-org/cherry-typeorm-connector": "0.0.3",
+    "@lund-org/cherry": "^0.1.2",
+    "@lund-org/cherry-pug-connector": "0.0.2",
+    "@lund-org/cherry-typeorm-connector": "0.0.4",
     "bcrypt": "^3.0.5",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
@@ -50,7 +50,7 @@
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
-    "nyc": "^13.3.0",
+    "nyc": "^14.0.0",
     "socket.io-client": "^2.2.0"
   },
   "publishConfig": {

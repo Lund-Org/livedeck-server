@@ -77,10 +77,10 @@ describe('API', () => {
         // Tempo the process or the pending request on the websockets
         setTimeout(() => {
           expect(data.ws['create-category'].length).to.be.equal(1)
-          expect(data.ws['update-category'].length).to.be.equal(4)
+          expect(data.ws['update-category'].length).to.be.equal(6)
           expect(data.ws['delete-category'].length).to.be.equal(1)
           expect(data.ws['create-binding'].length).to.be.equal(1)
-          expect(data.ws['update-binding'].length).to.be.equal(1)
+          expect(data.ws['update-binding'].length).to.be.equal(3)
           expect(data.ws['delete-binding'].length).to.be.equal(1)
           resolve(1)
         }, 1000)

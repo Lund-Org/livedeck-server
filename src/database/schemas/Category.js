@@ -27,11 +27,6 @@ module.exports = new EntitySchema({
     },
     updated_at: {
       type: 'datetime'
-    },
-    deleted_at: {
-      type: 'datetime',
-      nullable: true,
-      default: null
     }
   },
   relations: {

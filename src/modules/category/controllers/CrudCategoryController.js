@@ -1,3 +1,5 @@
+const url = require('url')
+const querystring = require('querystring')
 const Category = require('../../../database/models/Category')
 const CategoryRepository = require('../../../database/repositories/CategoryRepository')
 const AbstractCategoryController = require('./AbstractCategoryController')
@@ -9,7 +11,11 @@ class CrudCategoryController extends AbstractCategoryController {
    * @param {CherryServerResponse} res The response of the request
    */
   async index (req, res) {
-    const categories = await CategoryRepository.getCategoriesByUserIdAsync(req.user.id)
+    const getParameters = querystring.parse(url.parse(req.url).query)
+    const categories = await CategoryRepository.getCategoriesByUserIdAsync(
+      req.user.id,
+      typeof getParameters.withbindings !== 'undefined'
+    )
 
     res.json(categories)
   }
@@ -56,9 +62,13 @@ class CrudCategoryController extends AbstractCategoryController {
   async update (req, res) {
     const category = await CategoryRepository.getCategoryByIdAndUserIdAsync(req.routeParameters.id, req.user.id)
 
-    if (category) {
+    if (typeof category !== 'undefined' && category) {
+      const oldCategoryWeight = category.weight
+      const newCategoryWeight = typeof req.params.weight !== 'undefined' ? req.params.weight : oldCategoryWeight
+
       category.set(req.params)
       await category.save()
+      await CategoryRepository.updateOrder(category.id, req.user.id, oldCategoryWeight, newCategoryWeight)
       res.json(category)
       return category
     } else {

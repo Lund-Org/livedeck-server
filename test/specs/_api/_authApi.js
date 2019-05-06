@@ -29,8 +29,8 @@ module.exports = (request, data) => {
       expect(statusCode).to.be.equal(200)
 
       // Test the payload returned by the call
-      expect(Object.keys(apiResponseParsed).length).to.be.equal(1)
       expect(typeof apiResponseParsed.token).to.be.equal('string')
+      testUserPayload(apiResponseParsed, 'root')
 
       data.token = apiResponseParsed.token
     }, {}, { username: 'root', password: 'root' })
@@ -65,7 +65,7 @@ module.exports = (request, data) => {
 
       // Test the result of the call
       expect(statusCode).to.be.equal(400)
-      expect(typeof apiResponseParsed.error).to.not.be.equal('undefined')
+      expect(apiResponseParsed.missingKeys.length).to.be.equal(2)
     })
   })
 

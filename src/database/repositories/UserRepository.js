@@ -12,9 +12,9 @@ class UserRepository {
   static async getOneByAsync (fieldName, value, withCategoryRelation = false) {
     const query = getRepository(User).createQueryBuilder('users')
 
-    if (withCategoryRelation) {
-      query.leftJoinAndSelect('users.categories', 'category')
-    }
+    // if (withCategoryRelation) {
+    //   query.leftJoinAndSelect('users.categories', 'category')
+    // }
 
     return query.where(`users.${fieldName} = :value`, { value }).getOne()
   }

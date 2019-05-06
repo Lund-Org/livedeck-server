@@ -1,9 +1,9 @@
-const MiddlewareHelper = require('../../../helpers/MiddlewareHelper')
+const RuleHelper = require('../../../helpers/RuleHelper')
 
-const requiredKeys = {
-  'name': 'string',
-  'color': 'string',
-  'weight': 'number'
+const paramRules = {
+  'name': { type: 'string', length: { min: 4, max: 200 } },
+  'color': { type: 'string', length: { min: 4, max: 200 } },
+  'weight': { type: 'number', length: { min: 0 } }
 }
 
 /**
@@ -15,16 +15,12 @@ const requiredKeys = {
 module.exports = {
   name: 'category-create-payload-validator',
   callback: (next, req, res) => {
-    const missingKeys = MiddlewareHelper.checkMissingKeys(requiredKeys, req.params)
-    const badFormatKeys = MiddlewareHelper.badFormatKeys(requiredKeys, req.params)
+    const errors = RuleHelper.rulesManager(paramRules, req.params, true)
 
-    if (missingKeys.length === 0 && badFormatKeys.length === 0) {
+    if (errors['missingKeys'].length === 0 && errors['badFormatKeys'].length === 0) {
       next.resolve(req, res)
     } else {
-      res.json({
-        missingKeys,
-        badFormatKeys
-      }, { statusCode: 400 })
+      res.json(errors, { statusCode: 400 })
     }
   }
 }

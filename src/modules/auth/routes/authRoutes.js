@@ -12,7 +12,8 @@ module.exports = {
       type: 'ROUTE',
       callback: (req, res) => AuthController.register(req, res),
       path: '/register',
-      method: ['POST']
+      method: ['POST'],
+      middlewares: ['user-registration-payload-validator']
     },
     {
       type: 'ROUTE',

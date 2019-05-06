@@ -13,7 +13,7 @@ module.exports = (request, data) => {
       name: 'MyBinding',
       icon: 'test.png',
       weight: 1,
-      type: 'testType'
+      type: 'image'
     })
   })
   it('Tests the binding update API', async () => {
@@ -24,6 +24,20 @@ module.exports = (request, data) => {
       testBindingPayload(apiResponseParsed, 'MyBindingTest')
     }, { Authorization: data.key }, { name: 'MyBindingTest', configuration: { 'foo': 'bar' } })
   })
+  it('Tests the binding order update API', async () => {
+    await request('/bindings/' + data.bindingId, 'PATCH', (APIResponse, statusCode) => {
+      const apiResponseParsed = JSON.parse(APIResponse)
+
+      expect(statusCode).to.be.equal(200)
+      testBindingPayload(apiResponseParsed, 'MyBindingTest')
+    }, { Authorization: data.key }, { weight: 32 })
+    await request('/bindings/' + data.bindingId, 'PATCH', (APIResponse, statusCode) => {
+      const apiResponseParsed = JSON.parse(APIResponse)
+
+      expect(statusCode).to.be.equal(200)
+      testBindingPayload(apiResponseParsed, 'MyBindingTest')
+    }, { Authorization: data.key }, { weight: 0 })
+  })
   it('Tests the binding list API', async () => {
     await request('/bindings', 'GET', (APIResponse, statusCode) => {
       const apiResponseParsed = JSON.parse(APIResponse)
@@ -31,7 +45,7 @@ module.exports = (request, data) => {
       expect(statusCode).to.be.equal(200)
       expect(Array.isArray(apiResponseParsed)).to.be.true
       expect(apiResponseParsed.length).to.be.equal(2)
-      testBindingPayload(apiResponseParsed[1], 'MyBindingTest')
+      testBindingPayload(apiResponseParsed[0], 'MyBindingTest')
     }, { Authorization: data.key })
   })
   it('Tests the binding get API', async () => {

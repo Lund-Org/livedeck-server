@@ -55,7 +55,7 @@ class WebsocketManager {
       UserRepository.getOneByAsync('key', data.token).then((user) => {
         if (user) {
           this._manageAuthentication(client, data)
-          client.emit('authentication-ok')
+          client.emit('authentication-ok', { user })
         } else {
           client.emit('authentication-ko')
         }

@@ -14,8 +14,7 @@ module.exports = class InitDatabase {
         password: '$2b$10$AEOFWy9FeIiv1OkvasedKuMJExqfMFKMzM8.PFwWWOWrk0WbOR902',
         key: 'fake-key',
         created_at: '2019-04-01 20:00:00',
-        updated_at: '2019-04-01 20:00:00',
-        deleted_at: null
+        updated_at: '2019-04-01 20:00:00'
       })
       .execute()
     await getConnection()
@@ -31,7 +30,6 @@ module.exports = class InitDatabase {
         configuration: '{ "foo": "bar" }',
         created_at: '2019-04-01 20:00:00',
         updated_at: '2019-04-01 20:00:00',
-        deleted_at: null,
         user: { id: 1 }
       })
       .execute()

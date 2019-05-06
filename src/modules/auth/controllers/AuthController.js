@@ -12,8 +12,7 @@ class AuthController {
    */
   async login (req, res) {
     try {
-      const obj = {}
-      const user = await UserRepository.getOneByAsync('username', req.params.username, true)
+      const user = await UserRepository.getOneByAsync('username', req.params.username, false)
 
       if (user) {
         return new Promise((resolve, reject) => {
@@ -24,9 +23,9 @@ class AuthController {
               }, { statusCode: 401 })
               resolve(err || bcryptRes)
             } else {
-              obj.token = jwt.sign({ authorization: user.key }, process.env.APP_JWT_SIGN_KEY, { noTimestamp: true })
-              res.json(obj)
-              resolve(obj)
+              user.token = jwt.sign({ authorization: user.key }, process.env.APP_JWT_SIGN_KEY, { noTimestamp: true })
+              res.json(user)
+              resolve(user)
             }
           })
         })

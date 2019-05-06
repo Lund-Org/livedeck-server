@@ -1,11 +1,10 @@
-const MiddlewareHelper = require('../../../helpers/MiddlewareHelper')
+const RuleHelper = require('../../../helpers/RuleHelper')
 
-const requiredKeys = {
-  'name': 'string',
-  'icon': 'string',
-  'weight': 'number',
-  'type': 'string',
-  'configuration': ['string', 'object']
+const paramRules = {
+  'name': { type: 'string', length: { min: 4, max: 250 } },
+  'icon': { type: 'string', length: { min: 4, max: 250 } },
+  'weight': { type: 'number', length: { min: 0 } },
+  'configuration': { type: ['string', 'object'] }
 }
 
 /**
@@ -17,17 +16,20 @@ const requiredKeys = {
 module.exports = {
   name: 'binding-update-payload-validator',
   callback: (next, req, res) => {
-    const badFormatKeys = MiddlewareHelper.badFormatKeys(requiredKeys, req.params)
+    const errors = RuleHelper.rulesManager(paramRules, req.params, false)
 
-    if (badFormatKeys.length === 0) {
-      if (typeof req.params.configuration === 'object') {
-        req.params.configuration = JSON.stringify(req.params.configuration)
-      }
+    if (typeof req.params.type !== 'undefined') {
+      delete req.params.type
+    }
+
+    if (typeof req.params.configuration === 'object') {
+      req.params.configuration = JSON.stringify(req.params.configuration)
+    }
+
+    if (errors['missingKeys'].length === 0 && errors['badFormatKeys'].length === 0) {
       next.resolve(req, res)
     } else {
-      res.json({
-        badFormatKeys
-      }, { statusCode: 400 })
+      res.json(errors, { statusCode: 400 })
     }
   }
 }

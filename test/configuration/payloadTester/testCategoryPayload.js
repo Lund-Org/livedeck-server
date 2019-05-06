@@ -10,7 +10,6 @@ module.exports = (payload, name) => {
   expect(typeof payload.color).to.be.equal('string')
   expect(typeof payload.created_at).to.be.equal('string')
   expect(typeof payload.updated_at).to.be.equal('string')
-  expect(payload.deleted_at).to.be.equal(null)
   if (typeof payload.bindings !== 'undefined') {
     expect(Array.isArray(payload.bindings)).to.be.true
   }

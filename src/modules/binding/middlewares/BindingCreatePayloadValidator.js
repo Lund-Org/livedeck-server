@@ -1,10 +1,11 @@
-const MiddlewareHelper = require('../../../helpers/MiddlewareHelper')
+const RuleHelper = require('../../../helpers/RuleHelper')
+const bindingTypes = require('../../../constants/binding-types')
 
-const requiredKeys = {
-  'name': 'string',
-  'icon': 'string',
-  'weight': 'number',
-  'type': 'string'
+const paramRules = {
+  'name': { type: 'string', length: { min: 4, max: 250 } },
+  'icon': { type: 'string', length: { min: 4, max: 250 } },
+  'weight': { type: 'number', length: { min: 0 } },
+  'type': { type: 'string', enum: bindingTypes }
 }
 
 /**
@@ -16,20 +17,16 @@ const requiredKeys = {
 module.exports = {
   name: 'binding-create-payload-validator',
   callback: (next, req, res) => {
-    const missingKeys = MiddlewareHelper.checkMissingKeys(requiredKeys, req.params)
-    const badFormatKeys = MiddlewareHelper.badFormatKeys(requiredKeys, req.params)
+    const errors = RuleHelper.rulesManager(paramRules, req.params, true)
 
     if (typeof req.params.configuration !== 'undefined') {
       delete req.params.configuration
     }
 
-    if (missingKeys.length === 0 && badFormatKeys.length === 0) {
+    if (errors['missingKeys'].length === 0 && errors['badFormatKeys'].length === 0) {
       next.resolve(req, res)
     } else {
-      res.json({
-        missingKeys,
-        badFormatKeys
-      }, { statusCode: 400 })
+      res.json(errors, { statusCode: 400 })
     }
   }
 }
